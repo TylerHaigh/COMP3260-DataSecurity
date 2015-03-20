@@ -32,20 +32,37 @@ def recGcd(num1, num2):
 	else:
 		return recGcd(num2, num1 % num2)
 
-def gcdExt(a, b):
-	gcdArry = []
-	uArray = []
-	vArray = []
+def inverseGcd(num, mod):
+	remainders = []
+	#uselessArray = []
+	inverses = []
 
-	gcdArry.append(b)
-	gcdArry.append(a)
+	remainders.append(mod)
+	remainders.append(num)
 
-	uArray.append(1)
-	vArray.append(0)
-	uArray.append(0)
-	vArray.append(1)
-
+	#uselessArray.append(1)
+	#uselessArray.append(0)
+	inverses.append(0)
+	inverses.append(1)
 	i = 1
+
+	while remainders[i] != 0:
+		divisor = remainders[i-1] / remainders[i]
+		remainder = remainders[i-1] - divisor * remainders[i]
+		inverse = inverses[i-1] - divisor * inverses[i]
+
+		remainders.append(remainder)
+		#uselessArray.append(uselessArray[i-1] - divisor * uselessArray[i])
+		inverses.append(inverse)
+		i = i + 1
+
+	# End while loop (remainders[i] == 0)
+	result = inverses[i-1]
+	if(result < 0):
+		return result + mod
+	else:
+		return result
+
 
 # Testing
 
@@ -56,4 +73,7 @@ x = dynGcd(100, 22)
 print x
 
 x = recGcd(100, 22)
+print x
+
+x = inverseGcd(5,17)
 print x
